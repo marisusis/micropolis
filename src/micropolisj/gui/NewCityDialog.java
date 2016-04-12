@@ -14,6 +14,12 @@ import java.io.*;
 import java.util.*;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.border.*;
+import javax.swing.BorderFactory; 
+import javax.swing.border.Border;
+import javax.swing.border.LineBorder;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.CompoundBorder;
 
 import micropolisj.engine.*;
 import static micropolisj.gui.MainWindow.EXTENSION;
@@ -75,7 +81,7 @@ public class NewCityDialog extends JDialog
 		getContentPane().add(buttonPane, BorderLayout.SOUTH);
 
 		JButton btn;
-		btn = new JButton(strings.getString("welcome.previous_map"));
+		btn = createSimpleButton(strings.getString("welcome.previous_map"));
 		btn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				onPreviousMapClicked();
@@ -84,7 +90,7 @@ public class NewCityDialog extends JDialog
 		buttonPane.add(btn);
 		previousMapBtn = btn;
 
-		btn = new JButton(strings.getString("welcome.play_this_map"));
+		btn = createSimpleButton(strings.getString("welcome.play_this_map"));
 		btn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				onPlayClicked();
@@ -92,14 +98,16 @@ public class NewCityDialog extends JDialog
 		buttonPane.add(btn);
 		getRootPane().setDefaultButton(btn);
 
-		btn = new JButton(strings.getString("welcome.next_map"));
+		btn = createSimpleButton(strings.getString("welcome.next_map"));
+
+
 		btn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				onNextMapClicked();
 			}});
 		buttonPane.add(btn);
 
-		btn = new JButton(strings.getString("welcome.load_city"));
+		btn = createSimpleButton(strings.getString("welcome.load_city"));
 		btn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				onLoadCityClicked();
@@ -107,7 +115,7 @@ public class NewCityDialog extends JDialog
 		buttonPane.add(btn);
 
 		if (showCancelOption) {
-			btn = new JButton(strings.getString("welcome.cancel"));
+			btn = createSimpleButton(strings.getString("welcome.cancel"));
 			btn.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent evt) {
 					onCancelClicked();
@@ -115,7 +123,7 @@ public class NewCityDialog extends JDialog
 			buttonPane.add(btn);
 		}
 		else {
-			btn = new JButton(strings.getString("welcome.quit"));
+			btn = createSimpleButton(strings.getString("welcome.quit"));
 			btn.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent evt) {
 					onQuitClicked();
@@ -230,4 +238,15 @@ public class NewCityDialog extends JDialog
 			levelBtns.get(lev).setSelected(lev == level);
 		}
 	}
+    private static JButton createSimpleButton(String text) {
+      JButton button = new JButton(text);
+      button.setForeground(Color.BLACK);
+      button.setBackground(Color.WHITE);
+      Border line = new LineBorder(Color.BLACK);
+      Border margin = new EmptyBorder(5, 15, 5, 15);
+      Border compound = new CompoundBorder(line, margin);
+      button.setFocusPainted(false);
+      button.setBorder(compound);
+      return button;    
+    }
 }
